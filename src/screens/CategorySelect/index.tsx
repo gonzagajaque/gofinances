@@ -1,7 +1,4 @@
-import React from 'react';
-import { FlatList } from 'react-native';
-import { Button } from '../../components/Forms/Button';
-import { categories } from '../../utils/categories';
+import React from 'react'
 import {
     Container,
     Header,
@@ -11,31 +8,40 @@ import {
     Name,
     Separator,
     Footer
-} from './styles';
+} from './styles'
+import { categories } from '../../utils/categories'
 
-interface Category {
-    key: string;
-    name: string;
+import { FlatList } from 'react-native'
+import { Button } from '../../components/Forms/Button'
+
+interface CategoryProps {
+    key: string
+    name: string
 }
 
 interface Props {
-    category: Category;
-    setCategory: (category: Category) => void;
-    closeSelectCategory: () => void;
+    category: CategoryProps
+    setCategory: (category: CategoryProps) => void
+    closeSelectCategory: () => void
 }
 
-export function CategorySelect({ category, setCategory, closeSelectCategory }: Props) {
-
-    function handleCategorySelect(category: Category) { setCategory(category) }
+export function CategorySelect({
+    category,
+    setCategory,
+    closeSelectCategory
+}: Props) {
+    function handleCategorySelect(category: CategoryProps) {
+        setCategory(category)
+    }
 
     return (
         <Container>
             <Header>
                 <Title>Categoria</Title>
             </Header>
+
             <FlatList
                 data={categories}
-                style={{ flex: 1, width: '100%' }}
                 keyExtractor={(item) => item.key}
                 renderItem={({ item }) => (
                     <Category
@@ -46,13 +52,13 @@ export function CategorySelect({ category, setCategory, closeSelectCategory }: P
                         <Name>{item.name}</Name>
                     </Category>
                 )}
+                style={{ flex: 1, width: '100%' }}
                 ItemSeparatorComponent={() => <Separator />}
             />
 
             <Footer>
-                <Button title="Selecionar" onPress={closeSelectCategory} />
+                <Button title={'Selecionar'} onPress={closeSelectCategory} />
             </Footer>
-
         </Container>
-    );
+    )
 }
