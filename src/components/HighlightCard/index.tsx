@@ -11,7 +11,7 @@ import {
 
 interface Props {
     type: 'up' | 'down' | 'total';
-    title: string;
+    name: string;
     amount: string;
     lastTransaction: string;
 }
@@ -22,11 +22,11 @@ const icon = {
     total: 'dollar-sign',
 };
 
-export const HighlightCard = ({ type, title, amount, lastTransaction }: Props) => {
+export const HighlightCard = ({ type, name, amount, lastTransaction }: Props) => {
     return (
         <Container type={type}>
             <Header>
-                <Title type={type}>{title}</Title>
+                <Title type={type}>{name}</Title>
                 <Icon name={icon[type]} type={type} />
             </Header>
             <Footer>
