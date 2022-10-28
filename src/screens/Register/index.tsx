@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Keyboard,
     Modal,
@@ -24,6 +24,7 @@ import { CategorySelectButton } from '../../components/Forms/CategorySelectButto
 import { CategorySelect } from '../CategorySelect';
 import { useForm } from 'react-hook-form';
 import { InputForm } from '../../components/Forms/InputForm';
+import { useAuth } from '../../hooks/auth';
 
 interface FormData {
     [name: string]: string;
@@ -40,11 +41,9 @@ const schema = Yup.object().shape({
 export function Register() {
     const [transactionType, setTransactionType] = useState('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+    const [category, setCategory] = useState({ key: 'category', name: 'Categoria' });
 
-    const [category, setCategory] = useState({
-        key: 'category',
-        name: 'Categoria',
-    });
+    const { user } = useAuth();
 
     const navigation = useNavigation();
 
@@ -58,7 +57,6 @@ export function Register() {
 
     function handleCloseSelectCategoryModal() { setCategoryModalOpen(false) }
 
-    const dataKey = '@gofinances:transactions';
 
     async function handleRegister(form: FormData) {
         if (!transactionType) return Alert.alert('Selecione o tipo da transação');
@@ -73,6 +71,7 @@ export function Register() {
             date: new Date()
         }
         try {
+            const dataKey = `@gofinances:transactions_user:${user.id}`;
             const data = await AsyncStorage.getItem(dataKey);
             const currentData = data ? JSON.parse(data) : [];
 
